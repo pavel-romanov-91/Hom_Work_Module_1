@@ -3,13 +3,28 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Xml;
+using System.Configuration;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Common;
+using System.Drawing;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
 
 
 namespace Hom_Work_Module_1
 {
     public partial class Form1 : Form
     {
-        SqlConnection sqlConnection;
+        private SqlConnection sqlConnection = null;
+        private SqlDataAdapter dataAdapter = null;
+        private DataSet dataSet = null;
+        private DataTable table = null;
+        private SqlConnection connection = new SqlConnection();
+        private SqlConnection connectionAsync = new SqlConnection();
+
 
         public Form1()
         {
@@ -18,28 +33,39 @@ namespace Hom_Work_Module_1
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Hom_Work_Module_1\Hom_Work_Module_1\Database1.mdf;Integrated Security=True";
-            sqlConnection = new SqlConnection(connectionString);
-            await sqlConnection.OpenAsync();
-            SqlDataReader? sqlReader = null;
-            SqlCommand command = new SqlCommand("SELECT * FROM[Products]", sqlConnection);
-            try
-            {
-                sqlReader = await command.ExecuteReaderAsync();
-                while (await sqlReader.ReadAsync())
-                {
-                    listBox1.Items.Add(Convert.ToString(sqlReader["Id"]) + " " + Convert.ToString(sqlReader["Name"]) + " " + Convert.ToString(sqlReader["Price"]));
-                }
-            }
-            catch (Exception ex) 
-            {
-                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            sqlConnection= new SqlConnection(ConfigurationManager.ConnectionStrings["MSSQL"].ConnectionString);
+            //connectionAsync.ConnectionString = ConfigurationManager.ConnectionStrings["MSSQL"].ConnectionString;
+            //connectionAsync.ConnectionString += ";Asynchronous Processing=true";
+            //await connectionAsync.OpenAsync();
+            //sqlConnection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Hom_Work_Module_1\Hom_Work_Module_1\Database1.mdf;Integrated Security=True");
+            //sqlConnection.Open();
+            //dataAdapter = new SqlDataAdapter("SELECT * FROM[Products]", sqlConnection);
+            //dataSet = new DataSet();
+            //dataAdapter.Fill(dataSet);
+            //table = dataSet.Tables["Products"];
 
-            }
-            finally
-            { 
-                if (sqlReader != null) sqlReader.Close(); 
-            }
+            //string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Hom_Work_Module_1\Hom_Work_Module_1\Database1.mdf;Integrated Security=True";
+            //sqlConnection = new SqlConnection(connectionString);
+            //await sqlConnection.OpenAsync();
+            //SqlDataReader? sqlReader = null;
+            // SqlCommand command = new SqlCommand("SELECT * FROM[Products]", sqlConnection);
+            //try
+            //{
+            //    sqlReader = await command.ExecuteReaderAsync();
+            //    while (await sqlReader.ReadAsync())
+            //    {
+            //        listBox1.Items.Add(Convert.ToString(sqlReader["Id"]) + " " + Convert.ToString(sqlReader["Name"]) + " " + Convert.ToString(sqlReader["Price"]));
+            //    }
+            //}
+            //catch (Exception ex) 
+            //{
+            //    MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            //}
+            //finally
+            //{ 
+            //    if (sqlReader != null) sqlReader.Close(); 
+            //}
         }
 
         private void âûõîäToolStripMenuItem_Click(object sender, EventArgs e)
@@ -139,5 +165,40 @@ namespace Hom_Work_Module_1
             }
                
         }
+
+        private async void ïîäêëþ÷èòñÿÊÁÄToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+            await sqlConnection.OpenAsync();
+            
+            dataAdapter = new SqlDataAdapter("SELECT * FROM[Products]", sqlConnection);
+            dataSet = new DataSet();
+            dataAdapter.Fill(dataSet);
+            table = dataSet.Tables["Products"];
+            SqlDataReader? sqlReader = null;
+            SqlCommand command = new SqlCommand("SELECT * FROM[Products]", sqlConnection);
+            try
+            {
+                sqlReader = await command.ExecuteReaderAsync();
+                while (await sqlReader.ReadAsync())
+                {
+                    listBox1.Items.Add(Convert.ToString(sqlReader["Id"]) + " " + Convert.ToString(sqlReader["Name"]) + " " + Convert.ToString(sqlReader["Price"]));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            finally
+            {
+                if (sqlReader != null) sqlReader.Close();
+            }
+
+
+
+
+        }
+
     }
 }

@@ -54,10 +54,11 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.подключитсяКБДToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -72,7 +73,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
             this.инструментыToolStripMenuItem,
-            this.справкаToolStripMenuItem});
+            this.справкаToolStripMenuItem,
+            this.подключитсяКБДToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 28);
@@ -320,6 +322,18 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "DELETE";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label9.ForeColor = System.Drawing.Color.Red;
+            this.label9.Location = new System.Drawing.Point(59, 117);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(50, 20);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "label9";
+            this.label9.Visible = false;
+            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(200, 58);
@@ -346,17 +360,12 @@
             this.label6.TabIndex = 7;
             this.label6.Text = "ID";
             // 
-            // label9
+            // подключитсяКБДToolStripMenuItem
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label9.ForeColor = System.Drawing.Color.Red;
-            this.label9.Location = new System.Drawing.Point(59, 117);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(50, 20);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "label9";
-            this.label9.Visible = false;
+            this.подключитсяКБДToolStripMenuItem.Name = "подключитсяКБДToolStripMenuItem";
+            this.подключитсяКБДToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
+            this.подключитсяКБДToolStripMenuItem.Text = "Подключится к БД";
+            this.подключитсяКБДToolStripMenuItem.Click += new System.EventHandler(this.подключитсяКБДToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -417,5 +426,6 @@
         private ToolStripMenuItem обновитьToolStripMenuItem;
         private Label label8;
         private Label label9;
+        private ToolStripMenuItem подключитсяКБДToolStripMenuItem;
     }
 }
